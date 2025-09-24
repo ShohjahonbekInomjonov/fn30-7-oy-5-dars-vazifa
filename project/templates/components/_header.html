@@ -1,0 +1,36 @@
+<!-- Navbar (eng tepada) -->
+<nav class="navbar">
+    <ul>
+        <li><a href="{% url 'home' %}" class="active">Asosiy</a></li>
+        <li><a href="about.html">Biz haqimizda</a></li>
+        {% if not request.user.is_authenticated %}
+        <li><a href="{% url 'login' %}">Kirish</a></li>
+        <li><a href="{% url 'register' %}">Ro'yxatdan o'tish</a></li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'profile' request.user.username %}">Profil</a></li>
+        {% endif %}
+        {% if perms.films.add_films %}
+        <li><a href="{% url 'add_movie' %}">Kino qo'shish</a></li>
+        {% endif %}
+        <li><a href="/admin">Admin</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Chiqish</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- Header rasmi -->
+<div class="header-image"></div>
+
+<!-- Kategoriyalar menyusi header rasmi ostida -->
+<div class="category-menu">
+    {% for genre in genres %}
+    <a href="{% url 'movie_by_genre' genre.pk %}">{{ genre.type }}</a>
+    {% endfor %}
+</div>
+
+<header class="header-content">
+    <div class="logo">Kino Janrlari</div>
+    <button class="nav-toggle" aria-label="Menyu ochish">&#9776;</button>
+</header>

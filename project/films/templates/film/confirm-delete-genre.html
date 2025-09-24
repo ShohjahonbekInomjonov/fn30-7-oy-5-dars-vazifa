@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ block.super }}: {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="container" style="max-width: 600px;">
+    <h1>{{ title }}</h1>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <p>Haqiqatan ham ushbu janrni o'chirmoqchimisiz?</p>
+      <button type="submit">O'chirish</button>
+      <a href="{% url 'home' %}">Bekor qilish</a>
+    </form>
+  </div>
+{% endblock %}

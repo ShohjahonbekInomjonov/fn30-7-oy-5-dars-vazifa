@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      {% block title %}
+        Kun uz
+      {% endblock %}
+    </title>
+
+    {% include 'components/_styles.html' %}
+
+    <style>
+      /* Container uchun */
+      .message {
+        padding: 15px 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        opacity: 1;
+        transition: opacity 1s ease;
+      }
+      
+      /* Turli darajalar uchun ranglar */
+      .message-debug {
+        background-color: #6c757d; /* gray */
+      }
+      
+      .message-info {
+        background-color: #17a2b8; /* cyan */
+      }
+      
+      .message-success {
+        background-color: #28a745; /* green */
+      }
+      
+      .message-warning {
+        background-color: #ffc107; /* yellow */
+        color: #212529; /* qora */
+      }
+      
+      .message-error {
+        background-color: #dc3545; /* qizil */
+      }
+    </style>
+
+    {% block style %}
+
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'components/_header.html' %}
+
+    {% include 'components/_messages.html' %}
+
+    <div class="container">
+      {% block content %}
+
+      {% endblock content %}
+    </div>
+
+    {% include 'components/_footer.html' %}
+
+    {% include 'components/_scripts.html' %}
+
+    <script>
+      window.onload = function () {
+        setTimeout(function () {
+          const messages = document.querySelectorAll('.message')
+          messages.forEach(function (msg) {
+            msg.style.opacity = '0'
+            // 1 sekunddan keyin display:none qilamiz
+            setTimeout(() => (msg.style.display = 'none'), 1000)
+          })
+        }, 5000) // 5 sekunddan keyin ishga tushadi
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock title %}
+
+
+{% block content %}
+  <div class="container" style="max-width: 600px;">
+    <h1>Kino qo'shish</h1>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+        {{ form.as_p }}
+
+      <button type="submit">
+        {% if '/update/' in request.path %}
+        Update
+        {% else %}
+        Save
+        {% endif %}
+      </button>
+    </form>
+  </div>
+{% endblock content %}

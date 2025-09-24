@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <div class="container" style="max-width: 400px;">
+    <h1>Kinoni o'chirishni tasdiqlash</h1>
+    <p><b>{{ title }}</b> ni o'chirmoqchimisiz?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn-delete">Ha, o'chirish</button>
+      <a href="{% url 'home' %}" class="btn-cancel">Bekor qilish</a>
+    </form>
+  </div>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <div class="container" style="max-width: 800px;">
+    <h1>{{ movie.name }}</h1>
+
+    <div class="detail-meta">
+      <span>Ko‘rishlar: {{ movie.views }}</span>
+      <span>Kategoriya: {{ movie.genre.type }}</span>
+      <span>Yil: {{ movie.year }}-yil</span>
+    </div>
+
+    {% if movie.image %}
+    <img src="{{ movie.image.url }}" alt="Kino rasmi" style="width:100%; max-height:400px; object-fit:cover; margin: 15px 0;" />
+    {% else %}
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png" alt="Kino rasmi" style="width:100%; max-height:400px; object-fit:cover; margin: 15px 0;">
+    {% endif %}
+
+    <p>
+      {{ movie.description|linebreaks }}
+    </p>
+
+    {% if movie.video %}
+    <video controls style="width: 100%; max-height: 400px; margin-top: 20px;">
+      <source src="{{ movie.video.url }}" type="video/mp4" />
+      Sizning brauzeringiz video formatini qo‘llab-quvvatlamaydi.
+    </video>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <form method="post" action="{% url 'add_comment' movie.pk %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit">Send</button>
+    </form>
+    {% endif %}
+
+    <div>
+      {% for comment in comments %}
+      <hr>
+      <ul>
+        <li>Author: {{ comment.user.username }}</li>
+        <li>Izoh: {{ comment.text }}</li>
+        <li>Vaqti: {{ comment.created }}</li>
+      </ul>
+      {% endfor %}
+    </div>
+
+  </div>
+
+{% endblock content %}
